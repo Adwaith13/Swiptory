@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Like = require("../models/like");
 const Post = require("../models/posts");
-const savePost = require("../models/savePosts");
+const SavePost = require("../models/savePosts");
 const fetchpostID = require("../middleware/fetchpostID");
 const fetchUserID = require("../middleware/fetchuserID");
-const SavePost = require("../models/savePosts");
 
 router.patch("/like/:postID", fetchpostID, fetchUserID, async (req, res) => {
   try {
@@ -18,15 +16,10 @@ router.patch("/like/:postID", fetchpostID, fetchUserID, async (req, res) => {
     });
 
     if (existingLike) {
-      //delete existing like
-      await Like.findOneAndDelete({ post_id: postID, user_id: userID });
-
       //decrement like count
       await Post.findByIdAndUpdate(postID, { $inc: { likeCount: -1 } });
       res.json({ status: "unliked", message: "Post unliked successfully" });
     } else {
-      await Like.create({ user_id: userID, post_id: postID });
-
       //increment like count
       await Post.findByIdAndUpdate(postID, { $inc: { likeCount: 1 } });
 
@@ -64,8 +57,56 @@ router.patch("/save/:postID", fetchpostID, fetchUserID, async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ status: "failed", message: "Internal server error" });
+    res
+      .status(500)
+      .json({ status: "failed", message: "Internal server error" });
   }
 });
 
-module.exports = router
+router.patch("/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { heading, description, images, category } = req.body;
+    await Post.findByIdAndUpdate(id, {
+      heading,
+      description,
+      images,
+      category,
+    });
+    res.status(200).json({
+      status: "success",
+      message: "post updated",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "failed",
+      message: "internal server error",
+    });
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { heading, description, images, category } = req.body;
+    await Post.findByIdAndDelete(id, {
+      heading,
+      description,
+      images,
+      category,
+    });
+    res.status(200).json({
+      status: "success",
+      message: "post deleted",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "failed",
+      message: "internal server error",
+    });
+  }
+});
+
+module.exports = router;

@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/posts.js");
 const fetchUserID = require('../middleware/fetchuserID.js')
+const isUserLoggedIn = require('../middleware/isUserLoggedIn.js')
 
 //create new post
-router.post("/post",fetchUserID, async (req, res) => {
+router.post("/post",isUserLoggedIn,fetchUserID, async (req, res) => {
   try {
     const { heading, description, images, category } = req.body;
 
