@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const Users = require("../models/users.js");
+const User = require("../models/users.js");
 
 router.post("/register", async (req, res) => {
   try {
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     }
 
     //checking if user exists
-    const existingUser = await Users.findOne({ username });
+    const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(409).json({
         status: "failed",
@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
 
     //encrypt password
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const newUser = await Users.create({
+    const newUser = await User.create({
       username,
       password: encryptedPassword,
     });
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const user = await Users.findOne({ username });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({
         status: "failed",

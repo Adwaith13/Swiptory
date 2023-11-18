@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/posts.js");
-const fetchUserNameMiddleware = require('../middleware/fetchusername.js')
+const fetchUserID = require('../middleware/fetchuserID.js')
 
 //create new post
-router.post("/post",fetchUserNameMiddleware, async (req, res) => {
+router.post("/post",fetchUserID, async (req, res) => {
   try {
     const { heading, description, images, category } = req.body;
 

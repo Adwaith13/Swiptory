@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const fetchUserNameMiddleware = (req, res, next) => {
+const fetchUserIDMiddleware = (req, res, next) => {
   const loginToken = req.headers.token;
   if (!loginToken) {
     return res.status(401).json({ status: "failed", message: "Unauthorized" });
@@ -17,4 +17,4 @@ const fetchUserNameMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = fetchUserNameMiddleware;
+module.exports = fetchUserIDMiddleware;
