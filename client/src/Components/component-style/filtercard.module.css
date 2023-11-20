@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+}
+
+.parent{
+    display: flex;
+    padding-left: 2%;
+}
+
+.card{
+    margin-left: 4%;
+    margin-top: 1.5%;
+    width: 11vw;
+    height: 20.5vh;
+    border-radius: 20px;
+    border: solid 2px white;
+    background-color: rgb(228, 215, 215);
+    cursor: pointer;
+}
