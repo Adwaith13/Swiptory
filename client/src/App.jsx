@@ -1,11 +1,11 @@
 import Navbar from "./Components/Navbar";
-import FilterCard from "./Components/FilterCard";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div>
       <Navbar />
-      <FilterCard />
+      <Home/>
     </div>
   );
 }

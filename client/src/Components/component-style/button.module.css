@@ -25,10 +25,104 @@
   padding: 0.5%;
   border: solid white;
   border-radius: 20px;
-  background: #73ABFF;
+  background: #73abff;
   color: #fff;
   text-align: center;
   font-family: "DM Sans", sans-serif;
   font-size: 90%;
+  cursor: pointer;
+}
+
+.modalHead {
+  color: black;
+  margin-top: 5%;
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 1000;
+  line-height: normal;
+}
+
+.username {
+  margin-top: 8%;
+  margin-left: 8%;
+}
+
+.usernamelabel,.passwordlabel {
+  color: black;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.usernameinput{
+  margin-left: 20%;
+  width: 40%;
+  padding: 0.8%;
+}
+
+.passwordinput{
+  margin-left: 21%;
+  width: 40%;
+  padding: 0.8%;
+}
+
+.passwordcontainer{
+  margin-top: 2%;
+  margin-left: 8%;
+}
+
+.registerbtn{
+  margin-top: 5%;
+  margin-left: 38%;
+  width: 20%;
+  padding:2.2%;
+  text-align: center;
+  font-family: 'DM Sans',sans-serif;
+  border-radius: 20px;
+  border: 2px solid white;
+  background-color: #73ABFF;
+  cursor: pointer;
+}
+
+.loginHead{
+  color: black;
+  margin-top: 3%;
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 1000;
+  line-height: normal;
+}
+
+.usernamelogin{
+  margin-top: 8%;
+  margin-left: 8%;
+}
+
+.passwordcontainerlogin{
+  margin-top: 2%;
+  margin-left: 8%;
+}
+
+.loginbtn{
+  margin-top: 5%;
+  margin-left: 38%;
+  width: 20%;
+  padding:2%;
+  text-align: center;
+  font-family: 'DM Sans',sans-serif;
+  border-radius: 20px;
+  border: 2px solid white;
+  background-color: #73ABFF;
+  cursor: pointer;
+}
+
+.close{
+  margin-left: 90%;
   cursor: pointer;
 }
