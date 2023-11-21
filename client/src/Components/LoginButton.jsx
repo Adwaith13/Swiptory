@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import React,{ Fragment, useState } from "react";
 import Modal from "react-modal";
 import button from "./component-style/button.module.css";
 import close from "../assets/logos/close.svg";
@@ -24,7 +24,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-export default function LoginButton() {
+export default function LoginButton({onLogin}) {
   //check if modal is open
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -52,6 +52,7 @@ export default function LoginButton() {
         return;
       }
       const payload = await loginUser(loginData);
+      onLogin()
       setError(false);
       console.log("User Logged In", payload);
 

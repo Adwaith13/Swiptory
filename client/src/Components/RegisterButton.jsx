@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import React,{ Fragment, useState } from "react";
 import Modal from "react-modal";
 import button from "./component-style/button.module.css";
 import close from "../assets/logos/close.svg";
@@ -13,7 +13,7 @@ const customStyles = {
     top: "50%",
     left: "50%",
     right: "auto",
-    height: "50vh",
+    height: "43vh",
     width: "35vw",
     borderRadius: "20px",
     bottom: "auto",
@@ -24,7 +24,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-export default function Button() {
+export default function RegisterButton({onRegister}) {
   //check if modal is open
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -54,6 +54,7 @@ export default function Button() {
         return;
       }
       const payload = await registerUser(registerData);
+      onRegister();
       setError(false);
       console.log("User Registered", payload);
 

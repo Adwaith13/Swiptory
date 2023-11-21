@@ -1,3 +1,4 @@
+import React from "react";
 import card from "./component-style/filtercard.module.css";
 
 export default function FilterCard() {
