@@ -1,0 +1,27 @@
+.popupContainer {
+  position: relative;
+  margin-top: 3%;
+  margin-left: 5%;
+}
+
+.toggleButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  width: 11vw;
+  height: 10vh;
+  background-color: white;
+  border: 1px solid white;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menuItem {
+  padding: 2% 2%;
+  cursor: pointer;
+}

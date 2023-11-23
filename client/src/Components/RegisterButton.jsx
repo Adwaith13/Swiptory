@@ -55,6 +55,7 @@ export default function RegisterButton({onRegister}) {
       }
       const payload = await registerUser(registerData);
       onRegister();
+      localStorage.setItem("username",registerData.username)
       setError(false);
       console.log("User Registered", payload);
 
@@ -102,10 +103,11 @@ export default function RegisterButton({onRegister}) {
               className={button.usernameinput}
               placeholder="Enter your Username"
               value={registerData.username}
+              name="username"
               onChange={(e) =>
                 setRegisterData({ ...registerData, username: e.target.value })
               }
-            ></input>{" "}
+            ></input>
             <br />
           </div>
           <br />
@@ -115,6 +117,7 @@ export default function RegisterButton({onRegister}) {
               type="password"
               className={button.passwordinput}
               placeholder="Enter your Password"
+              name="password"
               onChange={(e) =>
                 setRegisterData({ ...registerData, password: e.target.value })
               }

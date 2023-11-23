@@ -53,6 +53,7 @@ export default function LoginButton({onLogin}) {
       }
       const payload = await loginUser(loginData);
       onLogin()
+      localStorage.setItem("username",loginData.username)
       setError(false);
       console.log("User Logged In", payload);
 
@@ -100,6 +101,7 @@ export default function LoginButton({onLogin}) {
               className={button.usernameinput}
               placeholder="Enter your Username"
               value={loginData.username}
+              name="username"
               onChange={(e) =>
                 setLoginData({ ...loginData, username: e.target.value })
               }
@@ -112,6 +114,7 @@ export default function LoginButton({onLogin}) {
               type="password"
               className={button.passwordinput}
               placeholder="Enter your Password"
+              name="password"
               value={loginData.password}
               onChange={(e) =>
                 setLoginData({ ...loginData, password: e.target.value })

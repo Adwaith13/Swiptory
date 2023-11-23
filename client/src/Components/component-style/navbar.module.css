@@ -45,28 +45,7 @@
     margin-right: 5px;
 }
 
-.addStory{
-    margin-top: 1.2%;
-    margin-left: 3%;
-    width: 22%;
-    height: 75%;
-    border-radius: 20px;
-    background-color: #FF7373;
-    text-align: center;
-    font-family: 'DM Sans';
-    color: white;
-    font-size: 1.1rem;
-    border: solid white;
-    align-items: center;
-    cursor: pointer;
-}
-
 .profile{
     margin-left: 3%;
     margin-top: 0.5%;
-}
-
-.hamburger{
-    cursor: pointer;
-    margin-left: 5%;
 }

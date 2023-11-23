@@ -7,6 +7,8 @@ export const loginUser = async (userData) => {
     if (!user) {
       throw new Error("User Does not Exist");
     }
+    const loginToken = user.data.loginToken
+    localStorage.setItem("loginToken",loginToken)
     return user.data;
   } catch (err) {
     console.log(err);

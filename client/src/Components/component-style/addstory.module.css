@@ -1,0 +1,30 @@
+.btn{
+    margin-top: 1.2%;
+    margin-left: 3%;
+    width: 25%;
+    height: 75%;
+    border-radius: 20px;
+    background-color: #FF7373;
+    text-align: center;
+    font-family: 'DM Sans';
+    color: white;
+    font-size: 1.1rem;
+    border: solid white;
+    align-items: center;
+    cursor: pointer;
+}
+
+.close{
+    margin-left: 93%;
+    width: 5%;
+    height: 5%;
+    cursor: pointer;
+}
+
+.para{
+    font-family: 'DM Sans',sans-serif;
+    font-size: 0.7rem;
+    color: #474141;
+    margin-left: 82%;
+    margin-top: 1%;
+}
