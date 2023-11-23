@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
-const userpost = new mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,  //refernce to users _id
-    ref: "User", //reference to user model
-    required: true,
-  },
+const postSchema = new mongoose.Schema({
   heading: {
     type: String,
     required: true,
@@ -14,12 +9,10 @@ const userpost = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  images: {
+    type: String,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
@@ -30,5 +23,14 @@ const userpost = new mongoose.Schema({
   },
 });
 
-const Post = mongoose.model("Post", userpost);
+const userpostSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId, // reference to users _id
+    ref: "User", // reference to user model
+    required: true,
+  },
+  posts: [postSchema],
+});
+
+const Post = mongoose.model("Post", userpostSchema);
 module.exports = Post;

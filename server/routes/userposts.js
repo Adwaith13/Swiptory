@@ -1,35 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/posts.js");
-const fetchUserID = require('../middleware/fetchuserID.js')
-const isUserLoggedIn = require('../middleware/isUserLoggedIn.js')
+const fetchUserID = require("../middleware/fetchuserID.js");
+const isUserLoggedIn = require("../middleware/isUserLoggedIn.js");
 
 //create new post
-router.post("/post",isUserLoggedIn,fetchUserID, async (req, res) => {
+router.post("/post", isUserLoggedIn, fetchUserID, async (req, res) => {
   try {
-    const { heading, description, images, category } = req.body;
+    const { slides } = req.body;
+    const user_id = req.user_id;
 
-    const user_id = req.user_id
-
+    // Create a new post with a single array containing all slides
     const newPost = await Post.create({
       user_id,
-      heading,
-      description,
-      images,
-      category,
+      posts: slides.map((slide) => ({
+        heading: slide.heading,
+        description: slide.description,
+        images: slide.images,
+        category: slide.category,
+      })),
     });
 
     res.json({
-      message: "post successful",
+      message: "post created successfully",
       post: newPost,
     });
   } catch (err) {
     console.log(err);
-    res
-      .status(500)
-      .json({ status: "failed", message: "internal server error" });
+    res.status(500).json({ status: "failed", message: "internal server error" });
   }
 });
+
 
 //get all posts
 router.get("/allposts", async (req, res) => {
@@ -47,23 +48,23 @@ router.get("/allposts", async (req, res) => {
 });
 
 router.get("/food", async (req, res) => {
-    try {
-      const post = await Post.find({category:'food'});
-      res.json({
-          post
-      })
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+  try {
+    const post = await Post.find({ category: "food" });
+    res.json({
+      post,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 router.get("/healthandfitness", async (req, res) => {
   try {
-    const post = await Post.find({category:'health and fitness'});
+    const post = await Post.find({ category: "health and fitness" });
     res.json({
-        post
-    })
+      post,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -71,39 +72,39 @@ router.get("/healthandfitness", async (req, res) => {
 });
 
 router.get("/travel", async (req, res) => {
-    try {
-      const post = await Post.find({category:'travel'});
-      res.json({
-          post
-      })
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+  try {
+    const post = await Post.find({ category: "travel" });
+    res.json({
+      post,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-  router.get("/movie", async (req, res) => {
-    try {
-      const post = await Post.find({category:'movie'});
-      res.json({
-          post
-      })
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+router.get("/movie", async (req, res) => {
+  try {
+    const post = await Post.find({ category: "movie" });
+    res.json({
+      post,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-  router.get("/education", async (req, res) => {
-    try {
-      const post = await Post.find({category:'education'});
-      res.json({
-          post
-      })
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+router.get("/education", async (req, res) => {
+  try {
+    const post = await Post.find({ category: "education" });
+    res.json({
+      post,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 module.exports = router;
