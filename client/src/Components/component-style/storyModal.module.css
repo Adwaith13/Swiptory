@@ -1,6 +1,5 @@
 .modalContent {
   width: 100%;
-  fill: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0.00) 102.31%);
 }
 
 .imageContainer {
@@ -12,7 +11,7 @@
   position: absolute;
   width: fit-content;
   height: 28%;
-  top: 90%;
+  top: 85%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -49,3 +48,17 @@
     cursor: pointer;
   }
 
+.postdata{
+  position: relative;
+  height: fit-content;
+  width: 100%;
+  margin-top: 15%;
+}
+
+.likebtn{
+  margin-left: 65%;
+}
+
+.bookmark{
+  margin-left:10%;
+}

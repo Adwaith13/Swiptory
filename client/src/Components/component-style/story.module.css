@@ -1,22 +1,23 @@
 .story{
     background-color: black;
-    margin-left: 2%;
+    margin-left: 2.5%;
     margin-top: 1.5%;
-    width: 18vw;
-    height: 60vh;
-    border-radius:12px ;
+    width: 20vw;
+    height: 65vh;
+    border-radius: 7%;
     cursor: pointer;
 }
 
 .image{
-    width: 18vw;
-    height: 60vh;
+    width: 20vw;
+    height: 65vh;
+    border-radius: 5%;
 }
 
 .details{
-    position: fixed;
-    margin-top: 20%;
-    width: min-content;
+    position: absolute;
+    margin-top: 22%;
+    width: fit-content;
     height: auto;
 }
 

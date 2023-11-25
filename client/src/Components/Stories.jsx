@@ -1,3 +1,4 @@
+// Stories.jsx
 import { useEffect, useState } from "react";
 import StoryModal from "./StoryModal";
 import { fetchAllPosts } from "../api/fetchAllUserPosts";
@@ -49,7 +50,7 @@ export default function Story() {
         <div
           key={index}
           className={storyStyle.story}
-          onClick={() => openModal(bundle.slides.map((item) => item.image_url))}
+          onClick={() => openModal(bundle.slides)}
         >
           <div className={storyStyle.details}>
             <h3 className={storyStyle.heading}>{bundle.slides[0].heading}</h3>
