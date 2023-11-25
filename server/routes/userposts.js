@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const fetchUserID = require("../middleware/fetchuserID.js")
+const isUserAuthenticated = require("../middleware/isUserAuthenticated.js")
 const Post = require("../models/posts.js");
-const fetchUserID = require("../middleware/fetchuserID.js");
-const isUserLoggedIn = require("../middleware/isUserLoggedIn.js");
+
 
 //create new post
-router.post("/post", isUserLoggedIn, fetchUserID, async (req, res) => {
+router.post("/post", isUserAuthenticated, fetchUserID, async (req, res) => {
   try {
     const { slides } = req.body;
     const user_id = req.user_id;
@@ -30,7 +31,6 @@ router.post("/post", isUserLoggedIn, fetchUserID, async (req, res) => {
     res.status(500).json({ status: "failed", message: "internal server error" });
   }
 });
-
 
 //get all posts
 router.get("/allposts", async (req, res) => {

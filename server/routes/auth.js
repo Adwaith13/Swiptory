@@ -32,10 +32,15 @@ router.post("/register", async (req, res) => {
       password: encryptedPassword,
     });
 
+    const registerToken = jwt.sign(newUser.toJSON(), process.env.JWT_SECRET, {
+      expiresIn: 14400,
+    });
+
     res.status(201).json({
       status: "success",
       message: "user registered successfully",
       user: newUser,
+      registerToken,
     });
   } catch (err) {
     console.log(err);
@@ -93,4 +98,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
