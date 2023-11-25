@@ -7,6 +7,8 @@ export const registerUser = async(userData)=>{
         if(!userResponse){
             throw new Error('Registration Failed');
         }
+        const registerToken = userResponse.data.registerToken
+        localStorage.setItem("registerToken",registerToken)
         return userResponse.data
     }catch(err){
         console.log(err)

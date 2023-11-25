@@ -4,16 +4,17 @@
 
 .parent{
     display: flex;
-    padding-left: 2%;
+    padding-left: 1%;
 }
 
 .card{
-    margin-left: 4%;
+    margin-left: 3.5%;
     margin-top: 1.5%;
-    width: 11vw;
-    height: 20.5vh;
-    border-radius: 20px;
+    width: 12vw;
+    height: 23vh;
+    border-radius: 10%;
     border: solid 2px white;
     background-color: rgb(228, 215, 215);
     cursor: pointer;
+    text-align: center;
 }

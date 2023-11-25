@@ -1,0 +1,51 @@
+.modalContent {
+  width: 100%;
+  fill: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0.00) 102.31%);
+}
+
+.imageContainer {
+    position: relative;
+    overflow: hidden;
+}
+
+.details {
+  position: absolute;
+  width: fit-content;
+  height: 28%;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 100%;
+}
+
+.heading {
+  margin-top: 2%;
+  margin-left: 2%;
+  color: #fff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 5%;
+}
+
+.description {
+  color: #fff;
+  margin-left: 2%;
+  font-family: "DM Sans" sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.close{
+    position: absolute;
+    top: 7%;
+    left:3%;
+    z-index: 2; 
+    cursor: pointer;
+  }
+

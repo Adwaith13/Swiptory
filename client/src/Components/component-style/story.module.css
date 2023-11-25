@@ -1,0 +1,38 @@
+.story{
+    background-color: black;
+    margin-left: 2%;
+    margin-top: 1.5%;
+    width: 18vw;
+    height: 60vh;
+    border-radius:12px ;
+    cursor: pointer;
+}
+
+.image{
+    width: 18vw;
+    height: 60vh;
+}
+
+.details{
+    position: fixed;
+    margin-top: 20%;
+    width: min-content;
+    height: auto;
+}
+
+.heading{
+    font-family: 'DM Sans',sans-serif;
+    color: white;
+    margin-top: 2%;
+    font-size: 1.5rem;
+    margin-left: 5%;
+}
+
+.description{
+    margin-top: 10%;
+    font-family: 'DM Sans',sans-serif;
+    color: white;
+    font-size: 1.2rem;
+    margin-left: 5%;
+
+}

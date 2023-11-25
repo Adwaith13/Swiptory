@@ -1,16 +1,20 @@
 .btnparent {
   display: flex;
   margin-left: 2%;
-  width: 90%;
+  width: 98%;
 }
 
 .buttoncontainer {
   margin-right: 4%;
+  position: relative;
 }
 
 .btnclose {
-  position: relative;
-  align-items: end;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 13;
+  height: 13;
   cursor: pointer;
 }
 
@@ -144,4 +148,8 @@
   font-family: "DM Sans", sans-serif;
   color: white;
   font-size: 1rem;
+}
+
+.selected{
+  border-color: #73abff;
 }

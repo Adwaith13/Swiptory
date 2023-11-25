@@ -13,6 +13,8 @@ const PopupMenu = ({ onLogout }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
+    localStorage.removeItem("registerToken")
+    localStorage.removeItem("loginToken")
 
     if (onLogout) {
       onLogout();

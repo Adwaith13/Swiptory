@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { postStory } from "../api/postStory";
 import postStyle from "./component-style/postStory.module.css";
 import close from "../assets/logos/close.svg";
 
-const MAX_SLIDES = 6;
-
 export default function SlideButton() {
+  const MAX_SLIDES = 6;
+
   const [currentSlide, setCurrentSlide] = useState(1);
 
   const [slides, setSlides] = useState([
@@ -13,6 +13,8 @@ export default function SlideButton() {
     { id: 2, heading: "", description: "", images: "", category: "" },
     { id: 3, heading: "", description: "", images: "", category: "" },
   ]);
+
+  const [selectedSlide, setSelectedSlide] = useState(null);
 
   const handleAddSlide = () => {
     if (slides.length < MAX_SLIDES) {
@@ -33,17 +35,29 @@ export default function SlideButton() {
   const handleRemoveSlide = (index) => {
     if (slides.length > 3) {
       const newSlides = slides.filter((_, i) => i !== index);
-      setSlides(newSlides);
 
-      // Adjust current slide to stay within the valid range
-      const adjustedCurrentSlide = Math.min(currentSlide, newSlides.length);
+      //update index of remaining slide
+      const updatedSlides = newSlides.map((slide, i) => ({
+        ...slide,
+        id: i + 1,
+      }));
+
+      setSlides(updatedSlides);
+
+      //adjusting current slide to stay within the valid range
+      let adjustedCurrentSlide = currentSlide;
+
+      //check if the current slide is beyond the new length of slides
+      if (adjustedCurrentSlide >= updatedSlides.length) {
+        adjustedCurrentSlide = updatedSlides.length - 1;
+      }
+
       setCurrentSlide(adjustedCurrentSlide);
     }
   };
 
   const handleInputChange = (e, slideIndex) => {
     const { name, value } = e.target;
-    console.log(`Updating slide ${slideIndex} - ${name}: ${value}`);
     setSlides((prevSlides) =>
       prevSlides.map((slide, index) =>
         index + 1 === slideIndex ? { ...slide, [name]: value } : slide
@@ -53,7 +67,6 @@ export default function SlideButton() {
 
   const handlePost = async () => {
     try {
-      console.log("Current slides:", slides);
       // Check if fields are filled in all slides
       for (const slide of slides) {
         if (
@@ -72,9 +85,19 @@ export default function SlideButton() {
         slides: slides.map(({ id, ...rest }) => rest),
       };
 
-      const token = localStorage.getItem("loginToken");
+      const loginToken = localStorage.getItem("loginToken");
+      const registerToken = localStorage.getItem("registerToken");
+
+      let token = 0;
+      if (loginToken) {
+        token = loginToken;
+      } else if (registerToken) {
+        token = registerToken;
+      }
 
       const response = await postStory(postData, token);
+      
+
       console.log(response);
     } catch (err) {
       console.error(err);
@@ -98,28 +121,34 @@ export default function SlideButton() {
       <div className={postStyle.btnparent}>
         {slides.map((slide) => (
           <div key={slide.id} className={postStyle.buttoncontainer}>
+            {slide.id >= 4 && (
+              <img
+                className={postStyle.btnclose}
+                width={13}
+                height={13}
+                src={close}
+                onClick={() => handleRemoveSlide(slide.id - 1)}
+              ></img>
+            )}
             <button
               onClick={() => handleSlideChange(slide.id)}
-              className={postStyle.slidebtn}
+              className={`${postStyle.slidebtn} ${
+                selectedSlide === slide.id ? postStyle.selected : ""
+              }`}
             >
               Slide {slide.id}
-              {slide.id >= 4 && (
-                <img className={postStyle.btnclose}
-                  width={13}
-                  height={13}
-                  src={close}
-                  onClick={() => handleRemoveSlide(slide.id - 1)}
-                ></img>
-              )}
             </button>
           </div>
         ))}
-        <button onClick={handleAddSlide} className={postStyle.addbtn}>Add +</button>
+        <button onClick={handleAddSlide} className={postStyle.addbtn}>
+          Add +
+        </button>
       </div>
 
       <div className={postStyle.inputs}>
         <label className={postStyle.labels}>Heading: </label>
-        <input className={postStyle.heading}
+        <input
+          className={postStyle.heading}
           type="text"
           placeholder="Your Heading"
           name="heading"
@@ -130,7 +159,8 @@ export default function SlideButton() {
         <br />
 
         <label className={postStyle.labels}>Description: </label>
-        <input className={postStyle.description}
+        <input
+          className={postStyle.description}
           placeholder="Story Description"
           name="description"
           value={slides[currentSlide - 1].description}
@@ -140,7 +170,8 @@ export default function SlideButton() {
         <br />
 
         <label className={postStyle.labels}>Image Url: </label>
-        <input className={postStyle.image}
+        <input
+          className={postStyle.image}
           type="text"
           placeholder="Image URL"
           name="images"
@@ -149,9 +180,10 @@ export default function SlideButton() {
         />
 
         <br />
-        
+
         <label className={postStyle.labels}>Category: </label>
-        <select className={postStyle.category}
+        <select
+          className={postStyle.category}
           name="category"
           value={slides[currentSlide - 1].category}
           onChange={(e) => handleInputChange(e, currentSlide)}
@@ -168,9 +200,15 @@ export default function SlideButton() {
       </div>
 
       <div className={postStyle.buttons}>
-        <button onClick={handlePreviousSlide} className={postStyle.previous}>Previous</button>
-        <button onClick={handleNextSlide} className={postStyle.next}>Next</button>
-        <button onClick={handlePost} className={postStyle.post}>Post</button>
+        <button onClick={handlePreviousSlide} className={postStyle.previous}>
+          Previous
+        </button>
+        <button onClick={handleNextSlide} className={postStyle.next}>
+          Next
+        </button>
+        <button onClick={handlePost} className={postStyle.post}>
+          Post
+        </button>
       </div>
     </div>
   );
