@@ -5,9 +5,9 @@ const SavePost = require("../models/savePosts");
 const fetchpostID = require("../middleware/fetchpostID");
 const fetchUserID = require("../middleware/fetchuserID");
 
-router.patch("/like/:postID", fetchpostID, fetchUserID, async (req, res) => {
+router.patch("/like/:postID", fetchUserID, async (req, res) => {
   try {
-    const postID = req.params.postID;
+    const postID = req.params._id;
     const userID = req.user_id;
 
     const existingLike = await Like.findOne({
