@@ -1,7 +1,26 @@
+.pageheading{
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-family: 'DM Sans',sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.datapresent{
+    text-align: center;
+    font-family: 'DM Sans',sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+
+}
+
 .story{
+    display: inline-block;
     background-color: black;
     margin-left: 2.5%;
-    margin-top: 1.5%;
+    margin-top: 1%;
+    margin-bottom: 2%;
     width: 20vw;
     height: 65vh;
     border-radius: 7%;
@@ -35,5 +54,5 @@
     color: white;
     font-size: 1.2rem;
     margin-left: 5%;
-
 }
+

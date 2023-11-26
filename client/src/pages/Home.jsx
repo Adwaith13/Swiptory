@@ -1,12 +1,22 @@
 import React from "react";
 import FilterCard from "../Components/FilterCard";
-import Stories from "../Components/Stories"
+import UserStories from "../Components/UserStories";
+import FoodStories from "../Components/FoodStories";
+import Health from "../Components/Health";
+import Travel from "../Components/Travel";
+import Movies from "../Components/Movies";
+import Education from "../Components/Education";
 
 export default function Home() {
   return (
     <div>
       <FilterCard />
-      <Stories />
+      <UserStories />
+      <FoodStories />
+      <Health />
+      <Travel />
+      <Movies />
+      <Education />
     </div>
   );
 }

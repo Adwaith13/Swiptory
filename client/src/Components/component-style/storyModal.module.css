@@ -11,7 +11,7 @@
   position: absolute;
   width: fit-content;
   height: 28%;
-  top: 85%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -48,17 +48,13 @@
     cursor: pointer;
   }
 
-.postdata{
-  position: relative;
-  height: fit-content;
-  width: 100%;
-  margin-top: 15%;
-}
-
 .likebtn{
   margin-left: 65%;
+  margin-top: 20%;
+  cursor: pointer;
 }
 
 .bookmark{
   margin-left:10%;
+  cursor: pointer;
 }

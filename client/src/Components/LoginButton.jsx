@@ -53,9 +53,9 @@ export default function LoginButton({onLogin}) {
       }
       const payload = await loginUser(loginData);
       onLogin()
-      localStorage.setItem("username",loginData.username)
       setError(false);
-      console.log("User Logged In", payload);
+      localStorage.setItem("username",payload.message)
+      console.log("User Logged In", payload.message);
 
       //reset form
       setLoginData({
@@ -63,15 +63,11 @@ export default function LoginButton({onLogin}) {
         password: "",
       });
 
-      //show toast when login successfull
-      toast.success("User Logged In successfully!", {
-        progressClassName: toastStyles["green-progress-bar"],
-      });
-
       //close modal after successfull registraton
       closeModal();
     } catch (err) {
       console.log(err);
+      openModal()
     }
   };
 

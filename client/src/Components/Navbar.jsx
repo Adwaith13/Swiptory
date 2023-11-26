@@ -13,11 +13,20 @@ export default function Navbar() {
   const [isRegistered, setRegister] = useState(false);
 
   useEffect(() => {
+    const loginToken = localStorage.getItem("loginToken")
+    const registerToken = localStorage.getItem("registerToken")
     const getUsernamefromLocalStorage = localStorage.getItem("username");
-    if (getUsernamefromLocalStorage) {
-      setLoggedIn(true);
-      setRegister(true);
+    if(loginToken || registerToken){
+      if (getUsernamefromLocalStorage) {
+        setLoggedIn(true);
+        setRegister(true);
+      }
     }
+    else{
+      setLoggedIn(false);
+        setRegister(false);
+    }
+    
   }, []);
 
   const handleLogin = () => {
