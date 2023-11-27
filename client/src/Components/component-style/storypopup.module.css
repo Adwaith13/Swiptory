@@ -1,0 +1,93 @@
+.storyContainer {
+  position: relative;
+  left: 28%;
+}
+
+.details {
+  position: absolute;
+  background: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0) 102.31%);
+  width: 44.7%;
+  z-index: 1000;
+  margin-top: 50%;
+  height: 30%;
+}
+
+.heading {
+  font-size: 1.5rem;
+  color: white;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+.description {
+  font-size: 1.25rem;
+  color: white;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 3%;
+  margin-left: 5%;
+}
+
+.toggle {
+  width: 100%;
+  display: inline;
+  position: absolute;
+  margin-top: 30%;
+  z-index: 1000;
+}
+
+.previous {
+  cursor: pointer;
+  margin-left: 15%;
+  z-index: 1000;
+}
+
+.next {
+  cursor: pointer;
+  margin-left: 60%;
+  z-index: 1000;
+}
+
+.options {
+  width: 60%;
+  left: 20%;
+  top: 5%;
+  display: flex;
+  position: absolute;
+  z-index: 1000;
+}
+
+.closebtn {
+  position: absolute;
+  left: 20%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.link {
+  margin-left: 80%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.postAction{
+  position: relative;
+  width: 100%;
+  margin-top: 10%;
+}
+
+.bookmarkbtn{
+  margin-left: 10%;
+}
+
+.likebtn{
+  margin-left: 65%;
+  z-index: 1200;
+  cursor: pointer;
+}

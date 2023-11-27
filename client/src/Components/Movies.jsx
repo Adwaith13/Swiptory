@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { fetchCategoryApi } from "../api/fetchCategory";
-import FilterModal from "./FilterModals";
 import storyStyle from "./component-style/story.module.css";
 
 export default function FoodStories() {
@@ -20,8 +19,6 @@ export default function FoodStories() {
     };
     fetchFoodApi();
   }, []);
-
-  console.log(data)
 
   const openModal = (story) => {
     setSelectedStory(story);
@@ -54,13 +51,6 @@ export default function FoodStories() {
           <img src={item.images} className={storyStyle.image} />
         </div>
       ))}
-      <FilterModal
-        isOpen={modalIsOpen}
-        closeModal={closeModal}
-        selectedStory={selectedStory}
-        currentImageIndex={currentImageIndex}
-        openNextModal={openNextModal}
-      />
     </div>
   );
 }
