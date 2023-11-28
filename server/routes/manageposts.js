@@ -2,13 +2,22 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/posts");
 const SavePost = require("../models/savePosts");
-const fetchpostID = require("../middleware/fetchpostID");
+const fetchpostID = require("../middleware/fetchpostID")
 const fetchUserID = require("../middleware/fetchuserID");
 
-router.patch("/like/:postID", fetchUserID, async (req, res) => {
+router.patch("/like/:postID", fetchpostID, fetchUserID, async (req, res) => {
   try {
-    const postID = req.params._id;
+    const postID = req.params.postID;
     const userID = req.user_id;
+    const post = req.post;
+
+    const postIndex = post.posts.findIndex(p => p._id.toString() === postID);
+    if (postIndex === -1) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Post not found",
+      });
+    }
 
     const existingLike = await Like.findOne({
       user_id: userID,
@@ -17,12 +26,13 @@ router.patch("/like/:postID", fetchUserID, async (req, res) => {
 
     if (existingLike) {
       //decrement like count
-      await Post.findByIdAndUpdate(postID, { $inc: { likeCount: -1 } });
+      post.posts[postIndex].likeCount -= 1;
+      await post.save();
       res.json({ status: "unliked", message: "Post unliked successfully" });
     } else {
       //increment like count
-      await Post.findByIdAndUpdate(postID, { $inc: { likeCount: 1 } });
-
+      post.posts[postIndex].likeCount += 1;
+      await post.save();
       res.json({ status: "liked", message: "Post liked successfully" });
     }
   } catch (err) {

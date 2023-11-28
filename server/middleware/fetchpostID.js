@@ -4,7 +4,7 @@ const fetchPostIDMiddleware = async (req, res,next) => {
   try {
     const postID = req.params._id;
 
-    const post = await Posts.findOne({ postID });
+    const post = await Posts.findOne({ "_id":postID });
     if (!post) {
       return res.status(404).json({
         status: "failed",
