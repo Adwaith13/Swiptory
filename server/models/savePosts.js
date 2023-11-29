@@ -6,11 +6,14 @@ const savePostSchema = mongoose.Schema({
     ref: "User",
     required: true,
   },
-  post_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post",
-    required: true,
-  },
+  posts: [
+    {
+      post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    },
+  ],
 });
 
 const SavePost = mongoose.model("SavePost", savePostSchema);

@@ -55,7 +55,6 @@ router.get("/:category", async (req, res) => {
   const { category } = req.params;
 
   try {
-    // Find documents where at least one post has the specified category
     const userPosts = await Post.find({ "posts.category": category });
 
     // Extract posts with the specified category
@@ -63,13 +62,13 @@ router.get("/:category", async (req, res) => {
       return userPost.posts.find(post => post.category === category);
     });
 
-    // Remove any potential "undefined" values
-    const filteredCategoryPosts = categoryPosts.filter(post => post);
+    //limit the number of data in a post to 6
+    const limitPosts = categoryPosts.slice(0,6)
 
     res.json({
       success: true,
       message: `${category} posts fetched successfully`,
-      data: { posts: filteredCategoryPosts },
+      data: { posts: limitPosts },
     });
   } catch (error) {
     console.error(error);

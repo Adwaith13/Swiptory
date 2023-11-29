@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const LikeSchema = require("./likeSchema")
 
 const postSchema = new mongoose.Schema({
   heading: {
@@ -22,6 +23,8 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  likes:[LikeSchema]
+ 
 });
 
 const userpostSchema = new mongoose.Schema({

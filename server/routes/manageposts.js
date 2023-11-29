@@ -1,75 +1,157 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const Post = require("../models/posts");
 const SavePost = require("../models/savePosts");
-const fetchpostID = require("../middleware/fetchpostID")
 const fetchUserID = require("../middleware/fetchuserID");
+const isUserAuthenticated = require("../middleware/isUserAuthenticated");
 
-router.patch("/like/:postID", fetchpostID, fetchUserID, async (req, res) => {
+router.post("/like/:postID",isUserAuthenticated,fetchUserID,async (req, res) => {
+    try {
+      const user_id = req.user_id;
+      const post_id = req.params.postID;
+
+      // Find the post and its index in the array
+      const userPost = await Post.findOne({ "posts._id": post_id });
+
+      if (userPost) {
+        const postIndex = userPost.posts.findIndex(
+          (post) => post._id.toString() === post_id
+        );
+
+        if (
+          postIndex !== -1 &&
+          userPost.posts[postIndex] &&
+          userPost.posts[postIndex].likes
+        ) {
+          // Check if the user has already liked the post
+          const hasLiked = userPost.posts[postIndex].likes.some(
+            (like) => like.user_id && like.user_id.toString() === user_id
+          );
+
+          if (hasLiked) {
+            await Post.updateOne(
+              { "posts._id": post_id },
+              {
+                $inc: { "posts.$.likeCount": -1 },
+                $pull: {
+                  "posts.$.likes": {
+                    user_id: new mongoose.Types.ObjectId(user_id),
+                  },
+                },
+              }
+            );
+
+            const updatedPost = await Post.findOne({ "posts._id": post_id });
+
+            return res.json({
+              message: "Like removed",
+              success: true,
+              likeCount: updatedPost.posts[postIndex].likeCount,
+            });
+          }
+
+          await Post.updateOne(
+            { "posts._id": post_id },
+            {
+              $inc: { "posts.$.likeCount": 1 },
+              $push: {
+                "posts.$.likes": {
+                  user_id: new mongoose.Types.ObjectId(user_id),
+                },
+              },
+            }
+          );
+          const updatedPost = await Post.findOne({ "posts._id": post_id });
+          return res.json({
+            message: "Post liked",
+            success: true,
+            likeCount: updatedPost.posts[postIndex].likeCount,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ message: "Internal Server Error", success: false });
+    }
+  }
+);
+
+router.post('/bookmark/:postID', isUserAuthenticated, fetchUserID, async (req, res) => {
   try {
-    const postID = req.params.postID;
-    const userID = req.user_id;
-    const post = req.post;
+    const user_id = req.user_id;
+    const post_id = req.params.postID;
 
-    const postIndex = post.posts.findIndex(p => p._id.toString() === postID);
-    if (postIndex === -1) {
+    // Check if the post exists
+    const post = await Post.findById(post_id);
+
+    if (!post) {
       return res.status(404).json({
         status: "failed",
         message: "Post not found",
       });
     }
 
-    const existingLike = await Like.findOne({
-      user_id: userID,
-      post_id: postID,
-    });
+    // Find or create the SavePost document for the user
+    let savePost = await SavePost.findOne({ user_id });
 
-    if (existingLike) {
-      //decrement like count
-      post.posts[postIndex].likeCount -= 1;
-      await post.save();
-      res.json({ status: "unliked", message: "Post unliked successfully" });
-    } else {
-      //increment like count
-      post.posts[postIndex].likeCount += 1;
-      await post.save();
-      res.json({ status: "liked", message: "Post liked successfully" });
-    }
-  } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .json({ status: "failed", message: "Internal server error" });
-  }
-});
-
-router.patch("/save/:postID", fetchpostID, fetchUserID, async (req, res) => {
-  try {
-    const postID = req.params.postID;
-    const userID = req.user_id;
-
-    //check if post already saved
-    const existingSavedPost = await SavePost.findOne({
-      post_id: postID,
-      user_id: userID,
-    });
-    if (existingSavedPost) {
-      return res.json({
-        status: "alread saved",
-        message: "Post already saved",
+    if (!savePost) {
+      savePost = await SavePost.create({
+        user_id,
+        posts: [{ post }],
       });
+    } else {
+      const isPostAlreadyBookmarked = savePost.posts.some(
+        (bookmark) => bookmark?.post?.equals(post._id)
+      );
+
+      if (!isPostAlreadyBookmarked) {
+        savePost.posts.push({ post });
+      } else {
+        return res.status(400).json({
+          status: "failed",
+          message: "Post already bookmarked",
+        });
+      }
     }
 
-    await savePost.create({ user_id: userID, post_id: postID });
+    await savePost.save();
+
     res.json({
       status: "saved",
       message: "Post saved successfully",
     });
   } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .json({ status: "failed", message: "Internal server error" });
+    console.error(err);
+    res.status(500).json({ status: 'failed', message: 'Internal server error' });
+  }
+});
+
+router.get("/bookmarks/:userID", isUserAuthenticated,fetchUserID ,async (req, res) => {
+  try {
+    const user_id = req.user_id;
+    const savePost = await SavePost.findOne({ user_id: user_id }).lean();
+   
+    if (!savePost) {
+      return res.status(500).json({
+        status: "failed",
+        message:'Bookmarks not available'
+      });
+    }
+
+    // Populate the posts field to get the actual post documents
+    await SavePost.populate(savePost, { path: "posts.post" });
+
+    res.json({
+      status: "success",
+      bookmarks: savePost.posts,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "failed", message: "Internal server error" });
   }
 });
 
@@ -96,27 +178,5 @@ router.patch("/edit/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { heading, description, images, category } = req.body;
-    await Post.findByIdAndDelete(id, {
-      heading,
-      description,
-      images,
-      category,
-    });
-    res.status(200).json({
-      status: "success",
-      message: "post deleted",
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      status: "failed",
-      message: "internal server error",
-    });
-  }
-});
 
 module.exports = router;
