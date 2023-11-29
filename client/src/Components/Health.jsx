@@ -1,56 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { fetchCategoryApi } from "../api/fetchCategory";
 import storyStyle from "./component-style/story.module.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import storypopupStyle from "./component-style/storypopup.module.css";
+import CategoryStory from "./CategoryStory";
 
 export default function FoodStories() {
   const [data, setData] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedStory, setSelectedStory] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    const fetchFoodApi = async () => {
+    const fetchHealthandFitness = async () => {
       try {
-        const payload = await fetchCategoryApi ('healthandfitness');
+        const payload = await fetchCategoryApi("healthandfitness");
         setData(payload.data.posts);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchFoodApi();
+    fetchHealthandFitness();
   }, []);
-
-  const openModal = (story) => {
-    setSelectedStory(story);
-    setCurrentImageIndex(0);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  const openNextModal = () => {
-    const nextImageIndex = currentImageIndex + 6;
-    openModal(selectedStory, nextImageIndex);
-  };
+  
 
   return (
     <div>
       <h1 className={storyStyle.pageheading}>Top Stories about Health and Fitness</h1>
-      {data.map((item, index) => (
-        <div key={index} onClick={() => openModal(item)} className={storyStyle.story}>
-          <div className={storyStyle.details}>
-            <h3 className={storyStyle.heading}>{item.heading}</h3>
-            <p className={storyStyle.description}>{item.description}</p>
-          </div >
-          <img
-            src={item.images}
-            className={storyStyle.image}
-          />
+      <Popup
+        trigger={
+          <div className={storyStyle.story}>
+            <div className={storyStyle.details}>
+              <h3 className={storyStyle.heading}>
+                {data.length > 0 && data[0].heading}
+              </h3>
+              <p className={storyStyle.description}>
+                {data.length > 0 && data[0].description}
+              </p>
+            </div>
+            <img
+              src={data.length > 0 && data[0].images}
+              className={storyStyle.image}
+            />
+          </div>
+        }
+        modal
+        nested
+        contentStyle={{
+          width: "49rem",
+          height: "37.8rem",
+          backgroundColor: "transparent",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          border: "none",
+        }}
+      >
+        <div className={storypopupStyle.storyContainer}>
+          {data.length > 0 ? (
+            <CategoryStory data={data} />
+          ) : (
+            <p>No stories available</p>
+          )}
         </div>
-      ))}
-
+      </Popup>
     </div>
   );
 }

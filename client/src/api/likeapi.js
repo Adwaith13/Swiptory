@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export const likeApi = async (token,postID) => {
+export const likeApi = async (token, postID) => {
+  const URL = import.meta.env.VITE_BACKEND_URL;
   try {
-    const URL = import.meta.env.VITE_BACKEND_URL;
-    const like = await axios.patch(`${URL}/like/${postID}`,{},
+    const like = await axios.post(
+      `${URL}/like/${postID}`,
+      {},
       {
         headers: { token },
       }

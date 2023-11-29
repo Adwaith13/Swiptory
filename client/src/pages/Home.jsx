@@ -8,6 +8,7 @@ import Movies from "../Components/Movies";
 import Education from "../Components/Education";
 
 export default function Home() {
+  
   return (
     <div>
       <FilterCard />

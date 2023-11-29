@@ -17,15 +17,22 @@
 
 .story{
     display: inline-block;
+    flex-wrap: wrap;
     background-color: black;
-    margin-left: 2.5%;
-    margin-top: 1%;
+    margin-left: 3%;
+    margin-right: 1%;
+    margin-top: 1.5%;
     margin-bottom: 2%;
     width: 20vw;
     height: 65vh;
     border-radius: 7%;
     cursor: pointer;
 }
+
+.story .image {
+    flex-basis: 25%; 
+    box-sizing: border-box; 
+  }
 
 .image{
     width: 20vw;

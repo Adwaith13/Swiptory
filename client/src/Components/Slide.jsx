@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { postStory } from "../api/postStory";
 import postStyle from "./component-style/postStory.module.css";
 import close from "../assets/logos/close.svg";
+import Toast from "./Toast";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SlideButton() {
   const MAX_SLIDES = 6;
@@ -15,6 +18,7 @@ export default function SlideButton() {
   ]);
 
   const [selectedSlide, setSelectedSlide] = useState(null);
+  const [error,setError] = useState(false)
 
   const handleAddSlide = () => {
     if (slides.length < MAX_SLIDES) {
@@ -67,7 +71,6 @@ export default function SlideButton() {
 
   const handlePost = async () => {
     try {
-      // Check if fields are filled in all slides
       for (const slide of slides) {
         if (
           !slide.heading ||
@@ -75,11 +78,10 @@ export default function SlideButton() {
           !slide.images ||
           !slide.category
         ) {
-          alert("Please fill in all required fields in all slides.");
+          setError(true)
           return;
         }
       }
-
       // Combine data from all slides into a single bundle
       const postData = {
         slides: slides.map(({ id, ...rest }) => rest),
@@ -96,11 +98,17 @@ export default function SlideButton() {
       }
 
       const response = await postStory(postData, token);
-      
-
       console.log(response);
+      setSlides([
+        { id: 1, heading: "", description: "", images: "", category: "" },
+        { id: 2, heading: "", description: "", images: "", category: "" },
+        { id: 3, heading: "", description: "", images: "", category: "" },
+      ]);
+      toast.success("Story Posted");
+
     } catch (err) {
       console.error(err);
+      toast.error("Oops! Something is wrong")
     }
   };
 
@@ -198,6 +206,7 @@ export default function SlideButton() {
           <option value="education">Education</option>
         </select>
       </div>
+      {error? "Minimum 3 slides and All the fields are required": ""}
 
       <div className={postStyle.buttons}>
         <button onClick={handlePreviousSlide} className={postStyle.previous}>

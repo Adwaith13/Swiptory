@@ -1,11 +1,13 @@
 import React from "react";
 import card from "./component-style/filtercard.module.css";
+import all from "../assets/images/all.png"
 
 export default function FilterCard() {
   const filters = [
     {
       id: 1,
       title: "All",
+      image:{all},
     },
     {
       id: 2,

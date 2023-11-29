@@ -9,7 +9,7 @@
 
 .images {
   width: 21.1875rem;
-  height: 30rem;
+  height: 32rem;
 }
 
 .options {
@@ -54,11 +54,11 @@
 
 .details {
   position: absolute;
-  background: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0.00) 102.31%);
+  background: black;
   width: 43.3%;
-  z-index: 1000;
+  z-index: 1;
   margin-top: 55%;
-  height: 35%;
+  height: 28%;
 }
 
 .heading {
@@ -86,21 +86,27 @@
 .postAction {
   position: relative;
   width: 100%;
-  margin-top: 10%;
+  margin-top: 8%;
+  background-color: black;
 }
 
 .bookmarkbtn {
   margin-left: 10%;
-}
-
-.likebtn {
-  margin-left: 65%;
-  z-index: 1200;
   cursor: pointer;
 }
 
-.loadingbar{
-  margin-top: 5%;
-  width: 10%;
-  position: absolute;
+.likebtn {
+  background-color:black;
+  margin-left: 58%;
+  cursor: pointer;
+  border: none;
 }
+
+.likeCount{
+  display: inline-block;
+  color: white;
+  font-size: 1rem;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+

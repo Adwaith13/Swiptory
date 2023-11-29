@@ -4,7 +4,6 @@ import { fetchUserPosts } from "../api/fetchUserPosts";
 import storyStyle from "./component-style/story.module.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import storypopupStyle from "./component-style/storypopup.module.css";
 import StoriesComponent from "./StoriesComponent";
 
@@ -12,12 +11,13 @@ export default function Story() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
+  
+  const loginToken = localStorage.getItem("loginToken");
+  const registerToken = localStorage.getItem("registerToken");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const loginToken = localStorage.getItem("loginToken");
-        const registerToken = localStorage.getItem("registerToken");
         if (!loginToken || !registerToken) {
           setError(true);
         }
@@ -41,6 +41,7 @@ export default function Story() {
     };
     fetchData();
   }, []);
+ 
 
   const openStory = (index) => {
     setPopupOpen(true);
@@ -86,7 +87,7 @@ export default function Story() {
           <div className={storypopupStyle.storyContainer}>
             {data[index].posts.length > 0 ? (
               <StoriesComponent
-                data={data[index].posts}
+                data={bundle}
                 closeStory={closeStory}
                 onAllStoriesEnd={closeStory}
               />
