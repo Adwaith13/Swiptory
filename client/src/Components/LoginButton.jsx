@@ -1,42 +1,22 @@
 import React,{ Fragment, useState } from "react";
-import Modal from "react-modal";
-import button from "./component-style/button.module.css";
+import { Modal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
+import button from "../styles/button.module.css";
 import close from "../assets/logos/close.svg";
 import { loginUser } from "../api/login";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import toastStyles from "../Components/component-style/toast.module.css";
 import Toast from "../Components/Toast";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    height: "43vh",
-    width: "35vw",
-    borderRadius: "20px",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
-Modal.setAppElement("#root");
 
 export default function LoginButton({onLogin}) {
   //check if modal is open
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  //open modal
-  function openModal() {
-    setIsOpen(true);
-  }
+  //opens modal
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
-  //close modal
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -53,6 +33,7 @@ export default function LoginButton({onLogin}) {
       }
       const payload = await loginUser(loginData);
       onLogin()
+      toast.success("User Log In Successfull ")
       setError(false);
       localStorage.setItem("username",payload.message)
       console.log("User Logged In", payload.message);
@@ -64,30 +45,34 @@ export default function LoginButton({onLogin}) {
       });
 
       //close modal after successfull registraton
-      closeModal();
+      onCloseModal();
     } catch (err) {
+      toast.error("Something is wrong")
       console.log(err);
-      openModal()
+      onOpenModal()
     }
   };
 
   return (
     <Fragment>
       <Toast />
-      <button className={button.login} onClick={openModal}>
+      <button className={button.login} onClick={onOpenModal}>
         Sign In
       </button>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
+        open={open}
+        showCloseIcon={false}
+        center
+        classNames={{
+          modal:button.customModal
+        }}
       >
         <img
           src={close}
           width={30}
           height={30}
           className={button.close}
-          onClick={closeModal}
+          onClick={onCloseModal}
         ></img>
         <h1 className={button.loginHead}>Login to SwipTory</h1>
         <form>
@@ -118,7 +103,7 @@ export default function LoginButton({onLogin}) {
             ></input>
           </div>
           <span className={button.error}>
-            {error ? "Please enter valid Username" : ""}
+            {error ? "Username and password required" : ""}
           </span>
         </form>
         <br />

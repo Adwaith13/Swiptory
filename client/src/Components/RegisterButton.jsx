@@ -1,42 +1,21 @@
 import React,{ Fragment, useState } from "react";
-import Modal from "react-modal";
-import button from "./component-style/button.module.css";
+import { Modal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
+import button from "../styles/button.module.css";
 import close from "../assets/logos/close.svg";
 import { registerUser } from "../api/register";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import toastStyles from "../Components/component-style/toast.module.css";
+import toastStyles from "../styles/toast.module.css";
 import Toast from "../Components/Toast";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    height: "43vh",
-    width: "35vw",
-    borderRadius: "20px",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
-Modal.setAppElement("#root");
-
-export default function RegisterButton({onRegister}) {
+export default function RegisterButton({onRegister,className}) {
   //check if modal is open
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   //opens modal
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  //closes modal
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   //handling formdata
   const [registerData, setRegisterData] = useState({
@@ -71,7 +50,7 @@ export default function RegisterButton({onRegister}) {
       });
 
       //close modal after successfull registraton
-      closeModal();
+      onCloseModal()
     } catch (err) {
       console.error("Error during registration:", err.message);
     }
@@ -80,20 +59,23 @@ export default function RegisterButton({onRegister}) {
   return (
     <Fragment>
       <Toast />
-      <button className={button.register} onClick={openModal}>
-        Register Now
+      <button className={button.register} onClick={onOpenModal}>
+        Register
       </button>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
+        open={open}
+        showCloseIcon={false}
+        center
+        classNames={{
+          modal:button.customModal
+        }}
       >
         <img
           src={close}
           height={30}
           width={30}
           className={button.close}
-          onClick={closeModal}
+          onClick={onCloseModal}
         ></img>
         <h1 className={button.modalHead}>Register to SwipTory</h1>
         <form>

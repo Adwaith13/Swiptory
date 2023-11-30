@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import storypopupStyle from "./component-style/storypopup.module.css";
+import storypopupStyle from "../styles/storypopup.module.css";
 import { likeApi } from "../api/likeapi";
 import { bookmarkApi } from "../api/bookmarkApi";
 import storyclose from "../assets/logos/storyclose.svg";
@@ -11,6 +11,8 @@ import bookmarkicon from "../assets/logos/bookmarkicon.svg";
 import Toast from "./Toast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import likedIcon from "../assets/logos/likedIcon.svg";
+import bookmarkedIcon from "../assets/logos/bookmarked.svg"
 
 export default function Categories({ data }) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -28,6 +30,63 @@ export default function Categories({ data }) {
     setCurrentSlideIndex((prevIndex) =>
       prevIndex === data.length - 1 ? 0 : prevIndex + 1
     );
+  };
+
+  const [likeCount, setLikeCount] = useState(data[currentSlideIndex].likeCount);
+  const [isLiked, setLiked] = useState(false);
+
+  const likeAction = async () => {
+    const token =
+      localStorage.getItem("loginToken") ||
+      localStorage.getItem("registerToken");
+      const postLikeID = data[currentSlideIndex]._id;
+    try {
+      const likePost = await likeApi(token, postLikeID);
+      console.log(likePost.data);
+      setLikeCount(likePost.data.likeCount);
+      return likePost;
+    } catch (err) {
+      console.log(err);
+      toast.error("Something is Wrong");
+    }
+  };
+
+  const handleLike = () => {
+    likeAction();
+    setLiked(!isLiked);
+  };
+  console.log(data)
+
+  const [postBookmarked,setIsPostBookmarked] = useState(false)
+  const bookMarkAction = async () => {
+    const token =
+      localStorage.getItem("loginToken") ||
+      localStorage.getItem("registerToken");
+      const groupBookMark = data[currentSlideIndex]._id;
+      console.log(groupBookMark)
+    try {
+      const bookmark = await bookmarkApi(token, groupBookMark);
+      console.log(bookmark)
+      return bookmark;
+    } catch (err) {
+      console.log(err);
+      toast.error("Something is wrong")
+    }
+  };
+
+  const handleBookmark=()=>{
+    bookMarkAction();
+    setIsPostBookmarked(!postBookmarked)
+  }
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("URL copied to clipboard");
+    } catch (error) {
+      console.error("Error copying to clipboard:", error);
+      toast.error("Failed to copy URL");
+    }
   };
 
   return (
@@ -64,7 +123,7 @@ export default function Categories({ data }) {
           ></img>
           <img
             src={link}
-            /* onClick={copyToClipboard} */
+            onClick={copyToClipboard}
             width={18}
             height={18}
             className={storypopupStyle.link}
@@ -80,18 +139,21 @@ export default function Categories({ data }) {
             {data[currentSlideIndex]?.description}
           </p>
           <div className={storypopupStyle.postAction}>
-            <img
-              src={bookmarkicon}
-             
-              className={storypopupStyle.bookmarkbtn}
+          <img
+              src={postBookmarked ? bookmarkedIcon : bookmarkicon}
+              onClick={handleBookmark}
+              className={`${storypopupStyle.bookmarkbtn} ${postBookmarked ? 'bookmarked' :''}`}
               alt="Bookmark"
             ></img>
             <img
-              src={likeicon}
-            
-              className={storypopupStyle.likebtn}
+              src={isLiked ? likedIcon : likeicon}
+              onClick={handleLike}
+              className={`${storypopupStyle.likebtn} ${isLiked ? 'liked' : ''}`}
               alt="Like"
             ></img>
+            <h3 className={storypopupStyle.likeCount}>
+              {likeCount}
+            </h3>
           </div>
         </div>
 

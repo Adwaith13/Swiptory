@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import popup from "./component-style/popup.module.css";
+import popup from "../styles/popup.module.css";
 import hamburger from "../assets/logos/hamburger.svg";
+import RegisterButton from "./RegisterButton";
+import LoginButton from "./LoginButton";
 
 const PopupMenu = ({ onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,8 +34,8 @@ const PopupMenu = ({ onLogout }) => {
       ></img>
       {isOpen && (
         <div className={popup.menu}>
-          <p>{username}</p>
-          <button onClick={handleLogout}>Logout</button>
+          <p className={popup.name}>{username}</p>
+          <button onClick={handleLogout} className={popup.logoutbtn}>Logout</button>
         </div>
       )}
     </div>

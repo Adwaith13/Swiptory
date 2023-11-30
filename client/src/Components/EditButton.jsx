@@ -1,21 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React,{useState,Fragment} from 'react'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import addStory from "../styles/addStory.module.css";
 import close from "../assets/logos/close.svg";
+import edit from "../assets/logos/edit.svg"
 import Slide from "./Slide";
+import addStory from "../styles/addStory.module.css";
 
-export default function AddStory() {
-  const [open, setOpen] = useState(false);
+export default function EditButton() {
+    const [open, setOpen] = useState(false);
 
-  //opens modal
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+    //opens modal
+    const onOpenModal = () => setOpen(true);
+    const onCloseModal = () => setOpen(false);
   return (
-    <Fragment>
-      <button onClick={onOpenModal} className={addStory.btn}>
-        Add Story
-      </button>
+    <div>
+        <Fragment>
+        <button className={addStory.editbtn}  onClick={onOpenModal}>
+              <img src={edit} width={12} height={12}></img>Edit</button>
       <Modal
           open={open}
           showCloseIcon={false}
@@ -29,5 +30,7 @@ export default function AddStory() {
         <Slide />
       </Modal>
     </Fragment>
-  );
+
+    </div>
+  )
 }

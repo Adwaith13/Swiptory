@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchCategoryApi } from "../api/fetchCategory";
-import storyStyle from "./component-style/story.module.css";
+import storyStyle from "../styles/story.module.css";
+import storypopupStyle from "../styles/storypopup.module.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import storypopupStyle from "./component-style/storypopup.module.css";
 import CategoryStory from "./CategoryStory";
 
 export default function FoodStories() {

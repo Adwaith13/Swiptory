@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import storypopupStyle from "./component-style/storypopup.module.css";
+import storypopupStyle from "../styles/storypopup.module.css";
 import { likeApi } from "../api/likeapi";
-import {bookmarkApi} from "../api/bookmarkApi"
+import { bookmarkApi } from "../api/bookmarkApi";
 import storyclose from "../assets/logos/storyclose.svg";
 import previous from "../assets/logos/previous.svg";
 import next from "../assets/logos/next.svg";
@@ -11,39 +11,16 @@ import bookmarkicon from "../assets/logos/bookmarkicon.svg";
 import Toast from "./Toast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoadingBar from "react-top-loading-bar";
 import likedIcon from "../assets/logos/likedIcon.svg";
-import bookmarkedIcon from "../assets/logos/bookmarked.svg"
+import bookmarkedIcon from "../assets/logos/bookmarked.svg";
 
 const StoriesComponent = ({ data, closeStory }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [loadingBarProgress, setLoadingBarProgress] = useState(0);
 
   useEffect(() => {
     // Reset the slide index when stories change
     setCurrentSlideIndex(0);
   }, [data]);
-
-  /* const startLoadingBar = () => {
-    setLoadingBarProgress(0);
-    const interval = setInterval(() => {
-      setLoadingBarProgress((prevProgress) => prevProgress + 5);
-    }, 1000);
-
-    setTimeout(() => {
-      clearInterval(interval);
-      setLoadingBarProgress(100);
-    }, 3000);
-  };
-
-  useEffect(() => {
-    startLoadingBar();
-    const timer = setTimeout(() => {
-      showNextImage();
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [currentSlideIndex]); */
 
   const showPreviousImage = () => {
     setCurrentSlideIndex((prevIndex) =>
@@ -57,19 +34,21 @@ const StoriesComponent = ({ data, closeStory }) => {
     );
   };
 
-  const [likeCount, setLikeCount] = useState(data.posts[currentSlideIndex].likeCount);
+  const [likeCount, setLikeCount] = useState(
+    data.posts[currentSlideIndex].likeCount
+  );
   const [isLiked, setLiked] = useState(false);
 
   const likeAction = async () => {
     const token =
       localStorage.getItem("loginToken") ||
       localStorage.getItem("registerToken");
-      const postLikeID = data.posts[currentSlideIndex]._id;
+    const postLikeID = data.posts[currentSlideIndex]._id;
     try {
       const likePost = await likeApi(token, postLikeID);
       console.log(likePost.data);
       setLikeCount(likePost.data.likeCount);
-      return likePost;
+      toast.success("Post Liked");
     } catch (err) {
       console.log(err);
       toast.error("Something is Wrong");
@@ -81,28 +60,28 @@ const StoriesComponent = ({ data, closeStory }) => {
     setLiked(!isLiked);
   };
 
-  const [postBookmarked,setIsPostBookmarked] = useState(false)
-  
+  const [postBookmarked, setIsPostBookmarked] = useState(false);
+
   const bookMarkAction = async () => {
     const token =
       localStorage.getItem("loginToken") ||
       localStorage.getItem("registerToken");
-      const groupBookMark = data._id;
-      console.log(groupBookMark)
+    const groupBookMark = data._id;
+    console.log(groupBookMark);
     try {
       const bookmark = await bookmarkApi(token, groupBookMark);
-      console.log(bookmark)
-      return bookmark;
+      console.log(bookmark);
+      toast.success("Post Bookmarked");
     } catch (err) {
       console.log(err);
-      toast.error("Something is wrong")
+      toast.error("Something is wrong");
     }
   };
 
-  const handleBookmark=()=>{
+  const handleBookmark = () => {
     bookMarkAction();
-    setIsPostBookmarked(!postBookmarked)
-  }
+    setIsPostBookmarked(!postBookmarked);
+  };
 
   const copyToClipboard = async () => {
     try {
@@ -113,7 +92,6 @@ const StoriesComponent = ({ data, closeStory }) => {
       toast.error("Failed to copy URL");
     }
   };
-
 
   return (
     <div>
@@ -138,13 +116,6 @@ const StoriesComponent = ({ data, closeStory }) => {
       </div>
 
       <div className={storypopupStyle.storyContainer}>
-        {/* <LoadingBar
-          className={storypopupStyle.loadingBar}
-          color="white"
-          width="20%"
-          progress={loadingBarProgress}
-          onLoaderFinished={() => setLoadingBarProgress()}
-        /> */}
         <div className={storypopupStyle.options}>
           <img
             src={storyclose}
@@ -175,18 +146,18 @@ const StoriesComponent = ({ data, closeStory }) => {
             <img
               src={postBookmarked ? bookmarkedIcon : bookmarkicon}
               onClick={handleBookmark}
-              className={`${storypopupStyle.bookmarkbtn} ${postBookmarked ? 'bookmarked' :''}`}
+              className={`${storypopupStyle.bookmarkbtn} ${
+                postBookmarked ? "bookmarked" : ""
+              }`}
               alt="Bookmark"
             ></img>
             <img
               src={isLiked ? likedIcon : likeicon}
               onClick={handleLike}
-              className={`${storypopupStyle.likebtn} ${isLiked ? 'liked' : ''}`}
+              className={`${storypopupStyle.likebtn} ${isLiked ? "liked" : ""}`}
               alt="Like"
             ></img>
-            <h3 className={storypopupStyle.likeCount}>
-              {likeCount}
-            </h3>
+            <h3 className={storypopupStyle.likeCount}>{likeCount}</h3>
           </div>
         </div>
 

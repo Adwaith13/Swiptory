@@ -3,7 +3,7 @@
   left: 13%;
 }
 
-.storyItem{
+.storyItem {
   position: relative;
 }
 
@@ -18,7 +18,7 @@
   width: 43.5%;
   height: 12%;
   z-index: 1;
-  background: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0.00) 102.31%);
+  background: linear-gradient(180deg, #000 59.6%, rgba(0, 0, 0, 0) 102.31%);
 }
 
 .closebtn {
@@ -96,13 +96,13 @@
 }
 
 .likebtn {
-  background-color:black;
+  background-color: black;
   margin-left: 58%;
   cursor: pointer;
   border: none;
 }
 
-.likeCount{
+.likeCount {
   display: inline-block;
   color: white;
   font-size: 1rem;
@@ -110,3 +110,45 @@
   margin-bottom: 5%;
 }
 
+.customModal {
+  width: 40vw;
+  height: 60vh;
+}
+
+@media screen and (max-width: 768px) {
+  .images {
+    margin: 0;
+    width: 52%;
+    height: 100%;
+  }
+
+  .details {
+    width: 52%;
+    height: 40%;
+  }
+  .options {
+    width: 52%;
+  }
+
+  .toggle{
+    width: 45%;
+    margin-left: 8%;
+    position: absolute;
+    display: flex;
+
+  }
+
+  .previous{
+    width: 10;
+    height: 10;
+    margin-left: 20%;
+    z-index: 1000;
+  }
+
+  .next{
+    width: 10;
+    height: 10;
+    z-index: 1000;
+    margin-right: 10%;
+  }
+}

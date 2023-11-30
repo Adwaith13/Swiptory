@@ -1,17 +1,18 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { fetchUserPosts } from "../api/fetchUserPosts";
-import storyStyle from "./component-style/story.module.css";
+import storyStyle from "../styles/story.module.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import storypopupStyle from "./component-style/storypopup.module.css";
+import storypopupStyle from "../styles/storypopup.module.css";
 import StoriesComponent from "./StoriesComponent";
+import EditButton from "./EditButton";
 
 export default function Story() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  
+
   const loginToken = localStorage.getItem("loginToken");
   const registerToken = localStorage.getItem("registerToken");
 
@@ -41,15 +42,9 @@ export default function Story() {
     };
     fetchData();
   }, []);
- 
 
-  const openStory = (index) => {
-    setPopupOpen(true);
-  };
-
-  const closeStory = () => {
-    setPopupOpen(false);
-  };
+  const openPopup = () => setPopupOpen(true);
+  const closePopup = () => setPopupOpen(false);
 
   return (
     <div>
@@ -58,7 +53,7 @@ export default function Story() {
         <Popup
           key={index}
           trigger={
-            <div className={storyStyle.story}>
+            <div className={storyStyle.story} onClick={openPopup}>
               <div className={storyStyle.details}>
                 <h3 className={storyStyle.heading}>
                   {bundle.posts[0].heading}
@@ -67,12 +62,17 @@ export default function Story() {
                   {bundle.posts[0].description}
                 </p>
               </div>
-              <img src={bundle.posts[0].images} className={storyStyle.image} />
+              <img
+                src={bundle.posts[0].images}
+                className={storyStyle.image}
+                alt="Story"
+              />
+              <EditButton />
             </div>
           }
           modal
-          nested
-          onClose={closeStory}
+          open={isPopupOpen}
+          onClose={closePopup}
           contentStyle={{
             width: "49rem",
             height: "37.8rem",
@@ -88,8 +88,7 @@ export default function Story() {
             {data[index].posts.length > 0 ? (
               <StoriesComponent
                 data={bundle}
-                closeStory={closeStory}
-                onAllStoriesEnd={closeStory}
+                closeStory={closePopup}
               />
             ) : (
               <p>No stories available</p>

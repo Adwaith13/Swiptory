@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import FilterCard from "../Components/FilterCard";
 import UserStories from "../Components/UserStories";
 import FoodStories from "../Components/FoodStories";
@@ -8,16 +8,41 @@ import Movies from "../Components/Movies";
 import Education from "../Components/Education";
 
 export default function Home() {
-  
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    const loginToken = localStorage.getItem("loginToken");
+
+    if (loginToken) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
+
+  const handleCardClick = (category) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div>
-      <FilterCard />
-      <UserStories />
-      <FoodStories />
-      <Health />
-      <Travel />
-      <Movies />
-      <Education />
+      <FilterCard onCardClick={handleCardClick} />
+      {isLoggedIn &&
+        (selectedCategory === null || selectedCategory === "All") && (
+          <Fragment>
+            <UserStories />
+            <FoodStories />
+            <Health />
+            <Travel />
+            <Education />
+          </Fragment>
+        )}
+      {selectedCategory === "Food" && <FoodStories />}
+      {selectedCategory === "Health and Fitness" && <Health />}
+      {selectedCategory === "Travel" && <Travel />}
+      {selectedCategory === "Movies" && <Movies />}
+      {selectedCategory === "Education" && <Education />}
     </div>
   );
 }

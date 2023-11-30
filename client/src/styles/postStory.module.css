@@ -153,3 +153,35 @@
 .selected{
   border-color: #73abff;
 }
+
+@media screen and (max-width: 768px){
+  .btnparent{
+    display: flex;
+  }
+
+  .buttoncontainer{
+    
+    margin-bottom: 5%;
+  }
+
+  .inputs{
+    display: flex;
+    margin-bottom: 25%;
+    border: 2px solid black;
+    width: 60%;
+    margin-left: 35%;
+    margin-bottom: 55%;
+  }
+
+  .previous{
+    display: none;
+  }
+
+  .next{
+    display: none;
+  }
+
+
+
+  
+}

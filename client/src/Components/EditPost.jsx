@@ -217,7 +217,7 @@ export default function SlideButton() {
           Next
         </button>
         <button onClick={handlePost} className={postStyle.post}>
-          Post
+          Edit
         </button>
       </div>
     </div>
