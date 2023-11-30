@@ -79,7 +79,7 @@ export default function Navbar() {
 
           <div className={navbar.hamburgerMenu}>
             {isLoggedIn || isRegistered ? (
-              <Fragment>
+              <Fragment className={navbar.mobileview}>
                 <h1 className={navbar.mobilehead}>Swiptory</h1>
                 <div className={navbar.profilemobile}>
                   <img
