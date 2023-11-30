@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import addStory from "../styles/addStory.module.css";
+import addStory from "../styles/addstory.module.css";
 import close from "../assets/logos/close.svg";
 import Slide from "./Slide";
 
