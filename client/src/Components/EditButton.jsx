@@ -4,7 +4,7 @@ import 'react-responsive-modal/styles.css';
 import close from "../assets/logos/close.svg";
 import edit from "../assets/logos/edit.svg"
 import Slide from "./Slide";
-import addStory from "../styles/addStory.module.css";
+import addStory from "../styles/addstory.module.css";
 
 export default function EditButton() {
     const [open, setOpen] = useState(false);
