@@ -38,6 +38,14 @@ export default function Home() {
             <Education />
           </Fragment>
         )}
+      {!isLoggedIn && (
+        <Fragment>
+          <FoodStories />
+          <Health />
+          <Travel />
+          <Education />
+        </Fragment>
+      )}
       {selectedCategory === "Food" && <FoodStories />}
       {selectedCategory === "Health and Fitness" && <Health />}
       {selectedCategory === "Travel" && <Travel />}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { postStory } from "../api/postStory";
+import getPost from "../api/getPost"
 import postStyle from "../styles/postStory.module.css";
 import close from "../assets/logos/close.svg";
 import Toast from "./Toast";
@@ -68,6 +68,17 @@ export default function SlideButton() {
       )
     );
   };
+
+  useEffect(()=>{
+    try{
+      const fetchPost = async()=>{
+        const currentPostData= await getPost()
+      }
+
+    }catch(err){
+      console.log(err)
+    }
+  })
 
   const handlePost = async () => {
     try {

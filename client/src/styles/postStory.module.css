@@ -139,7 +139,7 @@
 }
 
 .post {
-    margin-left: 30%;
+  margin-left: 30%;
   width: 5.8rem;
   height: 2.5rem;
   border-radius: 1.25rem;
@@ -150,38 +150,43 @@
   font-size: 1rem;
 }
 
-.selected{
+.selected {
   border-color: #73abff;
 }
 
-@media screen and (max-width: 768px){
-  .btnparent{
-    display: flex;
+@media screen and (max-width: 768px) {
+  .btnparent {
+    display: inline;
+    align-items: center;
   }
 
-  .buttoncontainer{
-    
+  .buttoncontainer {
     margin-bottom: 5%;
+    align-items: center;
   }
+  
 
-  .inputs{
-    display: flex;
+  .inputs {
+    display: inline;
+    align-items: center;
     margin-bottom: 25%;
     border: 2px solid black;
     width: 60%;
     margin-left: 35%;
-    margin-bottom: 55%;
+    margin-bottom: 100%;
   }
 
-  .previous{
+  .previous {
     display: none;
   }
 
-  .next{
+  .next {
     display: none;
   }
 
+  .labels{
+    margin-bottom:10% ;
+  }
 
-
-  
+  .heading{}
 }
