@@ -3,6 +3,7 @@ import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import button from "../styles/button.module.css";
 import close from "../assets/logos/close.svg";
+import viewpassword from "../assets/logos/lookpassword.svg";
 import { registerUser } from "../api/register";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,6 +57,15 @@ export default function RegisterButton({onRegister,className}) {
     }
   };
 
+  const [showPassword,setShowPassword] = useState(false)
+
+  const handlePassword=(e)=>{
+    setRegisterData({...registerData,password:e.target.value})
+  }
+  const togglePassword=()=>{
+    setShowPassword(!showPassword)
+  }
+
   return (
     <Fragment>
       <Toast />
@@ -95,14 +105,21 @@ export default function RegisterButton({onRegister,className}) {
           <br />
           <div className={button.passwordcontainer}>
             <label className={button.passwordlabel}> Password </label>
+            <img
+              src={viewpassword}
+              width={12}
+              height={12}
+              className={button.viewpassword}
+              onClick={togglePassword}
+              alt={showPassword ? 'Hide Password' : 'Show Password'}
+            ></img>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               className={button.passwordinput}
               placeholder="Enter your Password"
               name="password"
-              onChange={(e) =>
-                setRegisterData({ ...registerData, password: e.target.value })
-              }
+              value={registerData.password}
+              onChange={handlePassword}
             ></input>
           </div>
           <span className={button.error}>

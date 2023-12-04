@@ -137,12 +137,19 @@
   margin-left: 30%;
 }
 
-
-
 .customModal{
   width: 38vw;
   height: 47vh;
+  overflow: hidden;
   border-radius: 20px;
+}
+
+.viewpassword{
+  position:absolute;
+  margin-left: 50%;
+  margin-top:1.5%;
+  cursor: pointer;
+
 }
 
 @media screen and (max-width: 768px) {

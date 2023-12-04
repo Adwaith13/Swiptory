@@ -1,22 +1,21 @@
-import React,{ Fragment, useState } from "react";
-import { Modal } from 'react-responsive-modal';
-import 'react-responsive-modal/styles.css';
+import React, { Fragment, useState } from "react";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 import button from "../styles/button.module.css";
 import close from "../assets/logos/close.svg";
+import viewpassword from "../assets/logos/lookpassword.svg";
 import { loginUser } from "../api/login";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toast from "../Components/Toast";
 
-
-export default function LoginButton({onLogin}) {
+export default function LoginButton({ onLogin }) {
   //check if modal is open
   const [open, setOpen] = useState(false);
 
   //opens modal
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
-
 
   const [loginData, setLoginData] = useState({
     username: "",
@@ -32,10 +31,10 @@ export default function LoginButton({onLogin}) {
         return;
       }
       const payload = await loginUser(loginData);
-      onLogin()
-      toast.success("User Log In Successfull ")
+      onLogin();
+      toast.success("User Log In Successfull ");
       setError(false);
-      localStorage.setItem("username",payload.message)
+      localStorage.setItem("username", payload.message);
       console.log("User Logged In", payload.message);
 
       //reset form
@@ -47,11 +46,20 @@ export default function LoginButton({onLogin}) {
       //close modal after successfull registraton
       onCloseModal();
     } catch (err) {
-      toast.error("Something is wrong")
+      toast.error("Something is wrong");
       console.log(err);
-      onOpenModal()
+      onOpenModal();
     }
   };
+
+  const [showPassword,setShowPassword] = useState(false)
+
+  const handlePassword=(e)=>{
+    setLoginData({...loginData,password:e.target.value})
+  }
+  const togglePassword=()=>{
+    setShowPassword(!showPassword)
+  }
 
   return (
     <Fragment>
@@ -64,7 +72,7 @@ export default function LoginButton({onLogin}) {
         showCloseIcon={false}
         center
         classNames={{
-          modal:button.customModal
+          modal: button.customModal,
         }}
       >
         <img
@@ -91,15 +99,21 @@ export default function LoginButton({onLogin}) {
           <br />
           <div className={button.passwordcontainerlogin}>
             <label className={button.passwordlabel}> Password </label>
+            <img
+              src={viewpassword}
+              width={12}
+              height={12}
+              className={button.viewpassword}
+              onClick={togglePassword}
+              alt={showPassword ? 'Hide Password' : 'Show Password'}
+            ></img>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               className={button.passwordinput}
               placeholder="Enter your Password"
               name="password"
               value={loginData.password}
-              onChange={(e) =>
-                setLoginData({ ...loginData, password: e.target.value })
-              }
+              onChange={handlePassword}
             ></input>
           </div>
           <span className={button.error}>
