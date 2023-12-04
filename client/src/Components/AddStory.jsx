@@ -25,6 +25,7 @@ export default function AddStory() {
           }}
       >
         <img src={close} onClick={onCloseModal} className={addStory.close}></img>
+        <h1 className={addStory.mobilehead}>Add Story to Feed</h1>
         <p className={addStory.para}>Add upto 6 slides</p>
         <Slide />
       </Modal>

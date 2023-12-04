@@ -29,7 +29,7 @@
   margin-top: 1%;
 }
 
-.editbtn{
+.editbtn {
   margin-top: 2%;
   position: relative;
   margin-left: 35%;
@@ -41,7 +41,7 @@
   cursor: pointer;
 }
 
-.customModal{
+.customModal {
   width: 45vw;
   height: 67vh;
   border-radius: 20px;
@@ -55,8 +55,31 @@
     margin-left: 30%;
   }
 
-  .customModal{
+  .customModal {
     width: 70%;
     height: 70%;
   }
+
+  .mobilehead {
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.2rem;
+    color: black;
+    margin-bottom: 3%;
+  }
+  .close {
+    width: 10%;
+    height: 10%;
+  }
+
+  .para {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .mobilehead {
+    display: none;
+  }
+  
 }

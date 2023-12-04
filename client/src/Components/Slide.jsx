@@ -18,7 +18,7 @@ export default function SlideButton() {
   ]);
 
   const [selectedSlide, setSelectedSlide] = useState(null);
-  const [error,setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const handleAddSlide = () => {
     if (slides.length < MAX_SLIDES) {
@@ -78,7 +78,7 @@ export default function SlideButton() {
           !slide.images ||
           !slide.category
         ) {
-          setError(true)
+          setError(true);
           return;
         }
       }
@@ -105,10 +105,9 @@ export default function SlideButton() {
         { id: 3, heading: "", description: "", images: "", category: "" },
       ]);
       toast.success("Story Posted");
-
     } catch (err) {
       console.error(err);
-      toast.error("Oops! Something is wrong")
+      toast.error("Oops! Something is wrong");
     }
   };
 
@@ -126,88 +125,90 @@ export default function SlideButton() {
 
   return (
     <div>
-      <Toast/>
-      <div className={postStyle.btnparent}>
-        {slides.map((slide) => (
-          <div key={slide.id} className={postStyle.buttoncontainer}>
-            {slide.id >= 4 && (
-              <img
-                className={postStyle.btnclose}
-                width={13}
-                height={13}
-                src={close}
-                onClick={() => handleRemoveSlide(slide.id - 1)}
-              ></img>
-            )}
-            <button
-              onClick={() => handleSlideChange(slide.id)}
-              className={`${postStyle.slidebtn} ${
-                selectedSlide === slide.id ? postStyle.selected : ""
-              }`}
-            >
-              Slide {slide.id}
-            </button>
-          </div>
-        ))}
-        <button onClick={handleAddSlide} className={postStyle.addbtn}>
-          Add +
-        </button>
+      <Toast />
+      <div className={postStyle.container}>
+        <div className={postStyle.btnparent}>
+          {slides.map((slide) => (
+            <div key={slide.id} className={postStyle.buttoncontainer}>
+              {slide.id >= 4 && (
+                <img
+                  className={postStyle.btnclose}
+                  width={13}
+                  height={13}
+                  src={close}
+                  onClick={() => handleRemoveSlide(slide.id - 1)}
+                ></img>
+              )}
+              <button
+                onClick={() => handleSlideChange(slide.id)}
+                className={`${postStyle.slidebtn} ${
+                  selectedSlide === slide.id ? postStyle.selected : ""
+                }`}
+              >
+                Slide {slide.id}
+              </button>
+            </div>
+          ))}
+          <button onClick={handleAddSlide} className={postStyle.addbtn}>
+            Add +
+          </button>
+        </div>
+
+        <div className={postStyle.inputs}>
+          <label className={postStyle.labels}>Heading: </label>
+          <input
+            className={postStyle.heading}
+            type="text"
+            placeholder="Your Heading"
+            name="heading"
+            value={slides[currentSlide - 1].heading}
+            onChange={(e) => handleInputChange(e, currentSlide)}
+          />
+
+          <br />
+
+          <label className={postStyle.labels}>Description: </label>
+          <input
+            className={postStyle.description}
+            placeholder="Story Description"
+            name="description"
+            value={slides[currentSlide - 1].description}
+            onChange={(e) => handleInputChange(e, currentSlide)}
+          ></input>
+
+          <br />
+
+          <label className={postStyle.labels}>Image Url: </label>
+          <input
+            className={postStyle.image}
+            type="text"
+            placeholder="Image URL"
+            name="images"
+            value={slides[currentSlide - 1].images}
+            onChange={(e) => handleInputChange(e, currentSlide)}
+          />
+
+          <br />
+
+          <label className={postStyle.labels}>Category: </label>
+          <select
+            className={postStyle.category}
+            name="category"
+            value={slides[currentSlide - 1].category}
+            onChange={(e) => handleInputChange(e, currentSlide)}
+          >
+            <option value="" disabled>
+              Select Category
+            </option>
+            <option value="food">Food</option>
+            <option value="healthandfitness">Health and Fitness</option>
+            <option value="travel">Travel</option>
+            <option value="movies">Movies</option>
+            <option value="education">Education</option>
+          </select>
+        </div>
+        {error ? "Minimum 3 slides and All the fields are required" : ""}
       </div>
-
-      <div className={postStyle.inputs}>
-        <label className={postStyle.labels}>Heading: </label>
-        <input
-          className={postStyle.heading}
-          type="text"
-          placeholder="Your Heading"
-          name="heading"
-          value={slides[currentSlide - 1].heading}
-          onChange={(e) => handleInputChange(e, currentSlide)}
-        />
-
-        <br />
-
-        <label className={postStyle.labels}>Description: </label>
-        <input
-          className={postStyle.description}
-          placeholder="Story Description"
-          name="description"
-          value={slides[currentSlide - 1].description}
-          onChange={(e) => handleInputChange(e, currentSlide)}
-        ></input>
-
-        <br />
-
-        <label className={postStyle.labels}>Image Url: </label>
-        <input
-          className={postStyle.image}
-          type="text"
-          placeholder="Image URL"
-          name="images"
-          value={slides[currentSlide - 1].images}
-          onChange={(e) => handleInputChange(e, currentSlide)}
-        />
-
-        <br />
-
-        <label className={postStyle.labels}>Category: </label>
-        <select
-          className={postStyle.category}
-          name="category"
-          value={slides[currentSlide - 1].category}
-          onChange={(e) => handleInputChange(e, currentSlide)}
-        >
-          <option value="" disabled>
-            Select Category
-          </option>
-          <option value="food">Food</option>
-          <option value="healthandfitness">Health and Fitness</option>
-          <option value="travel">Travel</option>
-          <option value="movies">Movies</option>
-          <option value="education">Education</option>
-        </select>
-      </div>
-      {error? "Minimum 3 slides and All the fields are required": ""}
 
       <div className={postStyle.buttons}>
         <button onClick={handlePreviousSlide} className={postStyle.previous}>
