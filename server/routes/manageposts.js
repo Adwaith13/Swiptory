@@ -135,7 +135,7 @@ router.get("/bookmarks/:userID", isUserAuthenticated,fetchUserID ,async (req, re
     const savePost = await SavePost.findOne({ user_id: user_id }).lean();
    
     if (!savePost) {
-      return res.status(500).json({
+      return res.status(404).json({
         status: "failed",
         message:'Bookmarks not available'
       });
@@ -154,6 +154,31 @@ router.get("/bookmarks/:userID", isUserAuthenticated,fetchUserID ,async (req, re
     res.status(500).json({ status: "failed", message: "Internal server error" });
   }
 });
+
+router.get("/post/:id",async(req,res)=>{
+  try{
+    const post_id = req.params.id;
+    const findPost = await Post.findOne({_id : post_id })
+    if(!findPost){
+      res.status(404).json({
+        status:'Failed',
+        message:'Post not found',
+      })
+    }
+
+      res.json({
+        status:'success',
+        post:findPost
+      })
+
+  }catch(err){
+    console.log(err)
+    res.status(500).json(({
+      status:'failed',
+      message:'Internal server error'
+    }))
+  }
+})
 
 router.patch("/edit/:id", async (req, res) => {
   try {
