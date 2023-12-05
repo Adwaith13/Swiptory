@@ -13,12 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     const loginToken = localStorage.getItem("loginToken");
-
-    if (loginToken) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
+    setLoggedIn(!!loginToken);
   }, []);
 
   const handleCardClick = (category) => {
@@ -28,16 +23,23 @@ export default function Home() {
   return (
     <div>
       <FilterCard onCardClick={handleCardClick} />
-      {isLoggedIn &&
-        (selectedCategory === null || selectedCategory === "All") && (
-          <Fragment>
-            <UserStories />
-            <FoodStories />
-            <Health />
-            <Travel />
-            <Education />
-          </Fragment>
-        )}
+      {(isLoggedIn && selectedCategory === null) || selectedCategory === "All" ? (
+        <Fragment>
+          <UserStories />
+          <FoodStories />
+          <Health />
+          <Travel />
+          <Education />
+        </Fragment>
+      ) : (
+        <Fragment>
+          {selectedCategory === "Food" && <FoodStories />}
+          {selectedCategory === "Health and Fitness" && <Health />}
+          {selectedCategory === "Travel" && <Travel />}
+          {selectedCategory === "Movies" && <Movies />}
+          {selectedCategory === "Education" && <Education />}
+        </Fragment>
+      )}
       {!isLoggedIn && (
         <Fragment>
           <FoodStories />
@@ -46,11 +48,6 @@ export default function Home() {
           <Education />
         </Fragment>
       )}
-      {selectedCategory === "Food" && <FoodStories />}
-      {selectedCategory === "Health and Fitness" && <Health />}
-      {selectedCategory === "Travel" && <Travel />}
-      {selectedCategory === "Movies" && <Movies />}
-      {selectedCategory === "Education" && <Education />}
     </div>
   );
 }
