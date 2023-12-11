@@ -62,13 +62,10 @@ router.get("/:category", async (req, res) => {
       return userPost.posts.find(post => post.category === category);
     });
 
-    //limit the number of data in a post to 6
-    const limitPosts = categoryPosts.slice(0,6)
-
     res.json({
       success: true,
       message: `${category} posts fetched successfully`,
-      data: { posts: limitPosts },
+      data: { posts: categoryPosts },
     });
   } catch (error) {
     console.error(error);
